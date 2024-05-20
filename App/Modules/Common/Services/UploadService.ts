@@ -2,11 +2,14 @@ import { Upload } from "../Models/Upload";
 import { HttpException } from "../../../Utils/Common/HttpException";
 import { UploadInterface } from "../Repositories/UploadInterface";
 import { HttpStatus } from "../../../Utils/Common/HttpStatus";
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
+import { UploadInterfaceToken } from "../../ServiceProvider";
 
 @Service()
 export class UploadService {
-  constructor(private uploadRepo: UploadInterface) {}
+  constructor(
+    @Inject(UploadInterfaceToken) private uploadRepo: UploadInterface
+  ) {}
 
   async findById(id: string): Promise<Upload> {
     try {
@@ -37,7 +40,10 @@ export class UploadService {
       const data = await this.uploadRepo.save(payload);
       return data ?? null;
     } catch (error) {
-      throw new HttpException(HttpStatus.SERVER_ERROR, "Failed to save data");
+      throw new HttpException(
+        HttpStatus.SERVER_ERROR,
+        "Failed to save data" + error
+      );
     }
   }
 

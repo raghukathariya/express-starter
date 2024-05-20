@@ -1,10 +1,10 @@
+import { Inject, Service } from "typedi";
 import { User } from "../../User/Models/User";
 import { AuthService } from "../Services/AuthService";
 import { LoginRequest } from "../Requests/AuthRequest";
+import { HttpStatus } from "../../../Utils/Common/HttpStatus";
 import { CreateUserRequest } from "../../User/Requests/UserRequest";
 import { Res, Body, Post, JsonController } from "routing-controllers";
-import { Inject, Service } from "typedi";
-import { HttpStatus } from "../../../Utils/Common/HttpStatus";
 
 @Service()
 @JsonController("/auth")
