@@ -1,0 +1,66 @@
+version: '3'
+services:
+  app:
+    container_name: express-starter
+    networks:
+      - express-starter
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - mongo-db
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    volumes:
+      - redis_data:/data
+    networks:
+      - express-starter
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME = admin
+      - MONGO_INITDB_ROOT_PASSWORD = admin123
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - express-starter
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_URL = "mongodb://admin:admin123@mongo:27017/"
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+    links:
+      - mongo-db
+    networks:
+      - express-starter
+    restart: always
+    depends_on:
+      - mongo-db
+volumes:
+  redis_data:
+  mongodb_data:
+networks:
+  express-starter:
+    driver: bridge
+    
