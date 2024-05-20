@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from "express";
 import { logger } from "./Logger";
 import { EXECUTION_TIME_LIMIT } from "../../Config/app";
-
+import { Request, Response, NextFunction } from "express";
 class ExecutionTimeMiddleware {
   private start: number;
 
@@ -16,9 +15,7 @@ class ExecutionTimeMiddleware {
       const end = new Date().getTime();
       const executionTime = end - this.start;
       if (executionTime > Number(EXECUTION_TIME_LIMIT))
-        logger.info(
-          `API call: ${req.method} ${req.originalUrl} executed in ${executionTime}ms`
-        );
+        logger.info(`API call: ${req.method} ${req.originalUrl} executed in ${executionTime}ms`);
     });
 
     next();

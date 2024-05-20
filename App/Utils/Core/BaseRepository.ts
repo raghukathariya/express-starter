@@ -1,14 +1,10 @@
-import { HttpException } from "../Common/HttpException";
-import { BaseInterface } from "./BaseInterface";
-import { Model, Document, startSession } from "mongoose";
-import { HttpStatus } from "../Common/HttpStatus";
 import { Service } from "typedi";
-import { unmanaged } from "inversify";
-
+import { BaseInterface } from "./BaseInterface";
+import { HttpStatus } from "../Common/HttpStatus";
+import { HttpException } from "../Common/HttpException";
+import { Model, Document, startSession } from "mongoose";
 @Service()
-export abstract class BaseRepository<T extends Document>
-  implements BaseInterface<T>
-{
+export abstract class BaseRepository<T extends Document> implements BaseInterface<T> {
   protected model: any;
 
   constructor(model: Model<T>) {
@@ -20,10 +16,7 @@ export abstract class BaseRepository<T extends Document>
       const data = await this.model.find({}).exec();
       return data ? data : [];
     } catch (error) {
-      throw new HttpException(
-        HttpStatus.SERVER_ERROR,
-        "Unable to retrieve data"
-      );
+      throw new HttpException(HttpStatus.SERVER_ERROR, "Unable to retrieve data");
     }
   }
 
