@@ -13,7 +13,10 @@ import { UserInterfaceToken } from "../../ServiceProvider";
 
 @Service()
 export class AuthService {
-  constructor(@Inject(UserInterfaceToken) private userRepo: UserInterface, private emailService: EmailService) {}
+  constructor(
+    @Inject(UserInterfaceToken) private userRepo: UserInterface,
+    private emailService: EmailService
+  ) {}
 
   async login(payload: any): Promise<any> {
     try {
@@ -87,14 +90,14 @@ export class AuthService {
     const emailOption: SendMailOptions = {
       from: MAIL_FROM,
       to: `${payload.firstName} ${payload.lastName} <${payload.email}>`,
-      subject: "Resort Nepal : Account registered successfully ✔",
+      subject: "My Nepal : Account registered successfully ✔",
     };
 
     const templateData = {
       fullName: payload.firstName + " " + payload.lastName,
-      companyName: "Resort Nepal",
-      fromName: "Raghu Chaudhary",
-      contactNumber: "9847287587",
+      companyName: "My Nepal",
+      fromName: "Abc Xyz",
+      contactNumber: "1234567892",
       email: user.email,
       userName: user.userName,
       currentYear: currentDate.getFullYear(),
