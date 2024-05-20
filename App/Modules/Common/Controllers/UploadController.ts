@@ -66,7 +66,6 @@ export class UploadController {
     @Res() res: any
   ): Promise<any> {
     try {
-      console.log("DATA", file);
       const uploadResult = await this.uploadsService.save(file);
 
       if (uploadResult) {

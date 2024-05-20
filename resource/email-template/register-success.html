@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ companyName }}</title>
+    <style>
+        /* Reset some default styles to ensure consistency */
+        body,
+        p {
+            margin: 0;
+            padding: 3px;
+        }
+
+        /* Add some global styling for consistency */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #faf8f8;
+        }
+
+        /* Style the header */
+        .header {
+            background-color: rgb(26, 61, 95);
+            color: #dcd6d6;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Style the main content */
+        .content {
+            padding: 20px;
+            color: rgb(87, 84, 100);
+        }
+        .title{
+            color: rgb(15, 35, 41);
+            font-size:large
+        }
+
+        /* Style the footer */
+        .footer {
+            background-color: #384379;
+            color: #d4bfbf;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Welcome to {{ companyName}}</h1>
+    </div>
+    <div class="content">
+        <p class="title">Successful Registration</p>
+        
+        <p>
+            Hello, {{ fullName }},
+        </p>
+        <p>
+            Your username is {{userName}}
+        </p>
+        <p>
+            Thank you for registering with us. Your registration was successful!
+        </p>
+        <p>
+            If you have any questions or need assistance, please feel free to contact us.
+        </p>
+        <p>
+            Sincerely,<br>
+            {{ fromName }}<br>
+            {{ companyName}}
+            {{ contactNumber }}
+        </p>
+    </div>
+    <div class="footer">
+        © {{ currentYear }} {{ companyName}} All rights reserved.
+    </div>
+</body>
+
+</html>
