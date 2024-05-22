@@ -6,9 +6,9 @@ import { Container } from "typedi";
 import "./Modules/ServiceProvider";
 import errorHandler from "strong-error-handler";
 import DatabaseConnection from "./Bootstrap/DatabaseConnection";
-import { CONTROLLER_PATH, PORT, CORS_OPTIONS, ENV, GLOBAL_MIDDLEWARE_PATH } from "./Config/app";
 import PrettyErrorMiddleware from "./Utils/Common/PrettyErrorMiddleware";
 import ExecutionTimeMiddleware from "./Utils/Common/ExecutionTimeMiddleware";
+import { CONTROLLER_PATH, PORT, CORS_OPTIONS, ENV, GLOBAL_MIDDLEWARE_PATH } from "./Config/app";
 import { createExpressServer, useContainer as routingUseContainer } from "routing-controllers";
 
 // Set the container for routing-controllers

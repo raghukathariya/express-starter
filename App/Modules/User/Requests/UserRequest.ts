@@ -1,15 +1,8 @@
-import {
-  IsBoolean,
-  IsEmail,
-  Length,
-  IsOptional,
-  IsArray,
-  MaxLength,
-  Validate,
-} from "class-validator";
 import { isUniqueEmail } from "../Middlewares/UniqueEmailValidator";
+import { IsBoolean, IsEmail, Length, IsOptional, IsArray } from "class-validator";
 
-export class CreateUserRequest {
+export class UserRequest {
+
   @Length(4, 8, {
     message:
       "Username must be greater than $constraint1 and must be less than or equal to $constraint2 character long",
@@ -51,29 +44,5 @@ export class CreateUserRequest {
 
   @IsArray({ message: "Role must be an array" })
   roles: string[];
-}
 
-export class UpdateUserRequest {
-  @Length(3, 20)
-  @IsOptional()
-  firstName?: string;
-
-  @Length(3, 15)
-  @IsOptional()
-  middleName?: string;
-
-  @Length(3, 20)
-  lastName: string;
-
-  @IsBoolean()
-  @IsOptional()
-  isActive?: boolean;
-
-  @IsEmail()
-  @IsOptional()
-  email?: string;
-
-  @IsArray({ message: "Roles must be array" })
-  @IsOptional()
-  roles?: string[];
 }

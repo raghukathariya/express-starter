@@ -1,31 +1,22 @@
 import { User } from "../Models/User";
 import { Service, Inject } from "typedi";
+import { UserRequest } from "../Requests/UserRequest";
 import { UserService } from "../Services/UserService";
 import { HttpStatus } from "../../../Utils/Common/HttpStatus";
 import { AuthMiddleware } from "../../Auth/Middlewares/AuthMiddleware";
-import {
-  Req,
-  Res,
-  Get,
-  UseBefore,
-  Body,
-  Param,
-  Post,
-  Put,
-  Delete,
-  JsonController,
-} from "routing-controllers";
-import { CreateUserRequest, UpdateUserRequest } from "../Requests/UserRequest";
+import { Req, Res, Get, UseBefore, Body, Param, Post, Put, Delete, JsonController } from "routing-controllers";
 
 @Service()
-@UseBefore(AuthMiddleware)
 @JsonController("/user")
+@UseBefore(AuthMiddleware)
 export class UserController {
-  constructor(@Inject() private usersService: UserService) {}
+
+  constructor(@Inject() private usersService: UserService) { }
 
   @Get("/")
   async getAll(@Req() req: any, @Res() res: any) {
     try {
+      console.log("REQ USER", req.user);
       const users: User[] = await this.usersService.findAll();
       if (users && users.length !== 0) {
         return res
@@ -36,19 +27,12 @@ export class UserController {
         .status(HttpStatus.NOT_FOUND)
         .json({ data: users, message: "Failed" });
     } catch (error) {
-      return res.status(HttpStatus.SERVER_ERROR).json({
-        message: "Something went wrong. Please contact system admin!",
-        error: error,
-      });
+      return res.status(HttpStatus.SERVER_ERROR).json({ message: "Something went wrong. Please contact system admin!", error: error, });
     }
   }
 
   @Get("/:id")
-  async getById(
-    @Param("id") id: string,
-    @Req() req: any,
-    @Res() res: any
-  ): Promise<User | null> {
+  async getById(@Param("id") id: string, @Req() req: any, @Res() res: any): Promise<User | null> {
     try {
       const user: User | null = await this.usersService.findById(id);
       return res.status(HttpStatus.OK).json({ data: user, message: "Success" });
@@ -60,10 +44,7 @@ export class UserController {
   }
 
   @Post("/")
-  async create(
-    @Body() payload: CreateUserRequest,
-    @Res() res: any
-  ): Promise<string> {
+  async create(@Body() payload: UserRequest, @Res() res: any): Promise<string> {
     const userResult = await this.usersService.save(payload);
     if (userResult) {
       return res.status(HttpStatus.OK).json({ message: "ok" });
@@ -71,11 +52,7 @@ export class UserController {
   }
 
   @Put("/:id")
-  async update(
-    @Body() userData: UpdateUserRequest,
-    @Param("id") id: string,
-    @Res() res: any
-  ): Promise<void> {
+  async update(@Body() userData: UserRequest, @Param("id") id: string, @Res() res: any): Promise<void> {
     try {
       const data = await this.usersService.update(id, userData);
       if (data) {
