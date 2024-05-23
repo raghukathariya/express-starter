@@ -6,7 +6,7 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "./build",
     "baseUrl": "./",
     "lib": ["es6", "dom"],
     "paths": {
@@ -17,5 +17,5 @@
     "strictPropertyInitialization": false
   },
   "include": ["App/**/*"],
-  "exclude": ["**/*.spec.ts", "node_modules", "App/Utils/Cli","logs"]
+  "exclude": ["**/*.spec.ts", "node_modules", "App/Utils/Cli","logs","build"]
 }

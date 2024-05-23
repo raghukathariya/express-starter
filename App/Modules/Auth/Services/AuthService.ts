@@ -1,22 +1,19 @@
 import bcrypt from "bcrypt";
+import { Service, Inject } from "typedi";
 import { SendMailOptions } from "nodemailer";
 import { User } from "../../User/Models/User";
 import { MAIL_FROM } from "../../../Config/mail";
 import { JWT_OPTIONS } from "../../../Config/app";
-import { UserInterface } from "../../User/Repositories/UserInterface";
-import { Service, Inject } from "typedi";
-import { EmailService } from "../../../Modules/Common/Services/EmailService";
-import { JwtManager } from "../../../Utils/Common/JwtManager";
-import { HttpException } from "../../../Utils/Common/HttpException";
-import { HttpStatus } from "../../../Utils/Common/HttpStatus";
 import { UserInterfaceToken } from "../../ServiceProvider";
+import { JwtManager } from "../../../Utils/Common/JwtManager";
+import { HttpStatus } from "../../../Utils/Common/HttpStatus";
+import { HttpException } from "../../../Utils/Common/HttpException";
+import { UserInterface } from "../../User/Repositories/UserInterface";
+import { EmailService } from "../../../Modules/Common/Services/EmailService";
 
 @Service()
 export class AuthService {
-  constructor(
-    @Inject(UserInterfaceToken) private userRepo: UserInterface,
-    private emailService: EmailService
-  ) {}
+  constructor(@Inject(UserInterfaceToken) private userRepo: UserInterface, private emailService: EmailService) { }
 
   async login(payload: any): Promise<any> {
     try {
@@ -49,10 +46,7 @@ export class AuthService {
         );
       }
     } catch (error) {
-      throw new HttpException(
-        HttpStatus.SERVER_ERROR,
-        "Failed to find user by email"
-      );
+      throw new HttpException(HttpStatus.SERVER_ERROR, "Failed to find user by email");
     }
   }
 
@@ -61,10 +55,7 @@ export class AuthService {
       const user = await this.userRepo.save(payload);
       return user ? user : null;
     } catch (error) {
-      throw new HttpException(
-        HttpStatus.SERVER_ERROR,
-        "Failed to find user by emaildd" + error
-      );
+      throw new HttpException(HttpStatus.SERVER_ERROR, "Failed to find user by emaildd" + error);
     }
   }
 
@@ -73,10 +64,7 @@ export class AuthService {
       const user = await this.userRepo.findByEmail(email);
       return user ? true : false;
     } catch (error) {
-      throw new HttpException(
-        HttpStatus.SERVER_ERROR,
-        "Failed to find user by emaild"
-      );
+      throw new HttpException(HttpStatus.SERVER_ERROR, "Failed to find user by emaild");
     }
   }
 
@@ -110,10 +98,7 @@ export class AuthService {
         templateData
       );
     } catch (error) {
-      throw new HttpException(
-        HttpStatus.SERVER_ERROR,
-        "Error in sending Email. Please contact to system admin"
-      );
+      throw new HttpException(HttpStatus.SERVER_ERROR, "Error in sending Email. Please contact to system admin");
     }
   }
 }

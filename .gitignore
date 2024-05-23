@@ -9,3 +9,4 @@ yarn.lock
 pnpm-lock.yaml
 dump.rdb
 assets
+build

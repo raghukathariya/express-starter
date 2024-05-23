@@ -6,10 +6,11 @@ import { Container } from "typedi";
 import "./Modules/ServiceProvider";
 import errorHandler from "strong-error-handler";
 import DatabaseConnection from "./Bootstrap/DatabaseConnection";
-import { CONTROLLER_PATH, PORT, CORS_OPTIONS, ENV, GLOBAL_MIDDLEWARE_PATH } from "./Config/app";
 import PrettyErrorMiddleware from "./Utils/Common/PrettyErrorMiddleware";
 import ExecutionTimeMiddleware from "./Utils/Common/ExecutionTimeMiddleware";
 import { createExpressServer, useContainer as routingUseContainer } from "routing-controllers";
+import { CONTROLLER_PATH, PORT, CORS_OPTIONS, ENV, GLOBAL_MIDDLEWARE_PATH, LIST_ROUTES } from "./Config/app";
+import { RouteManager } from "./Utils/Core/RouteManager";
 
 // Set the container for routing-controllers
 routingUseContainer(Container);
@@ -22,6 +23,7 @@ routingUseContainer(Container);
   | For Routing purpose [routing-controller] package has been used
   |
   */
+
 const app = createExpressServer({
   cors: {
     CORS_OPTIONS,
@@ -95,4 +97,8 @@ app.listen(PORT, () => {
   console.log(`🚀 App listening on the port ${PORT}`);
 });
 
+if (LIST_ROUTES == "true") {
+  const routeManager = new RouteManager(app);
+  routeManager.displayRoutes();
+}
 export default app;

@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from 'dotenv';
+config();
 /**
  |
  |=====================================================================
@@ -9,6 +9,6 @@ dotenv.config();
  */
 export const RedisConfig = {
     REDIS_HOST: process.env.REDIS_HOST ?? 'localhost',
-    REDIS_PORT : process.env.REDIS_PORT ?? 6379,
-    REDIS_ENABLED : process.env.REDIS_ENABLED ?? false
+    REDIS_PORT: process.env.REDIS_PORT ?? 6379,
+    REDIS_ENABLED: process.env.REDIS_ENABLED ?? false
 }
