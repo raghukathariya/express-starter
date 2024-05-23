@@ -1,5 +1,6 @@
-import dotenv from "dotenv";
+import { config } from 'dotenv';
 import { JwtServiceOptions } from "../Utils/Common/JwtManager";
+
 /**
  |
  |=====================================================================
@@ -7,7 +8,7 @@ import { JwtServiceOptions } from "../Utils/Common/JwtManager";
  |=====================================================================
  |
  */
-dotenv.config();
+config();
 /**
  |
  |=====================================================================
@@ -15,13 +16,14 @@ dotenv.config();
  |=====================================================================
  |
  */
-export const CONTROLLER_PATH = process.env.CONTROLLER_PATH ?? "/Modules/**/Controllers/*.ts";
-export const GLOBAL_MIDDLEWARE_PATH = process.env.GLOBAL_MIDDLEWARE_PATH ?? "/Utils/GLobalMiddlewares/*.ts";
 
 export const PORT = process.env.PORT ?? 3000;
 export const ENV = process.env.ENV ?? "development";
 export const API_KEY = process.env.API_KEY;
+export const LIST_ROUTES = process.env.LIST_ROUTES ?? false;
 
+export const CONTROLLER_PATH = process.env.ENV == "development" ? "/Modules/**/Controllers/*.ts" : "/Modules/**/Controllers/*.js";
+export const GLOBAL_MIDDLEWARE_PATH = process.env.ENV == "development" ? "/Utils/GLobalMiddlewares/*.ts" : "/Utils/GLobalMiddlewares/*.js";
 
 /**
  |

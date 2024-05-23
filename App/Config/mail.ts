@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from 'dotenv';
+config();
 /**
 |
 |=====================================================================
@@ -10,7 +10,7 @@ dotenv.config();
 
 const action = process.env.MAIL_SERVER;
 export const MAIL_FROM = process.env.MAIL_FROM;
-let result={};
+let result = {};
 
 switch (action) {
 
@@ -22,7 +22,7 @@ switch (action) {
                 secure: Boolean(JSON.parse(process.env.SMTP_SECURE)),
                 auth: {
                     user: process.env.SMTP_USERNAME,
-                    pass: process.env.SMTP_PASSWORD 
+                    pass: process.env.SMTP_PASSWORD
                 },
             }
             break;

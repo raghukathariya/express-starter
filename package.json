@@ -4,9 +4,9 @@
   "description": "Express modular framework",
   "main": "main.ts",
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc",
     "dev": "nodemon --watch 'App/**/*.ts' --exec 'ts-node' App/main.ts",
-    "start": "npm run build && NODE_ENV=production node ./dist/main.js",
+    "start": "npm run build && node ./build/main.js",
     "test": "ENV=test jest --detectOpenHandles",
     "test:watch": "ENV=test yarn test --detectOpenHandles --watch",
     "rnc": "ts-node ./App/Utils/Cli/Cli.ts"
@@ -22,6 +22,8 @@
     "bull": "^4.12.6",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "cli-table3": "^0.6.5",
+    "colorette": "^2.0.20",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
