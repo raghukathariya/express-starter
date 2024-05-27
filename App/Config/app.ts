@@ -23,7 +23,7 @@ export const API_KEY = process.env.API_KEY;
 export const LIST_ROUTES = process.env.LIST_ROUTES ?? false;
 
 export const CONTROLLER_PATH = process.env.ENV == "development" ? "/Modules/**/Controllers/*.ts" : "/Modules/**/Controllers/*.js";
-export const GLOBAL_MIDDLEWARE_PATH = process.env.ENV == "development" ? "/Utils/GLobalMiddlewares/*.ts" : "/Utils/GLobalMiddlewares/*.js";
+export const GLOBAL_MIDDLEWARE_PATH = process.env.ENV == "development" ? "/Utils/GlobalMiddlewares/*.ts" : "/Utils/GlobalMiddlewares/*.js";
 
 /**
  |
