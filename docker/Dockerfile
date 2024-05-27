@@ -7,6 +7,10 @@ WORKDIR /app
 # Copy the package.json and package-lock.json files to the container
 COPY package*.json ./
 
+
+# Bundle app source
+COPY . .
+
 # Install app dependencies
 RUN npm install -g pnpm && pnpm install
 
@@ -15,9 +19,6 @@ RUN npm install -g nodemon
 
 # Install ts-node to run application
 RUN npm install -g ts-node
-
-# Copy the rest of the application code into the container
-COPY . .
 
 # Load environment variables from .env file
 ARG PORT

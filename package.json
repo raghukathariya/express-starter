@@ -7,8 +7,6 @@
     "build": "tsc",
     "dev": "nodemon --watch 'App/**/*.ts' --exec 'ts-node' App/main.ts",
     "start": "npm run build && node ./build/main.js",
-    "test": "ENV=test jest --detectOpenHandles",
-    "test:watch": "ENV=test yarn test --detectOpenHandles --watch",
     "rnc": "ts-node ./App/Utils/Cli/Cli.ts"
   },
   "keywords": [
