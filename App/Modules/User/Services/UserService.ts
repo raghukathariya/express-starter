@@ -4,13 +4,12 @@ import { HttpException } from "../../../Utils/Common/HttpException";
 import { Service, Inject } from "typedi";
 import { RedisClient } from "../../../Bootstrap/RedisClient";
 import { User } from "../Models/User";
-import { UserInterfaceToken } from "../../ServiceProvider";
 
 @Service()
 export class UserService {
   private redisClient;
 
-  constructor(@Inject(UserInterfaceToken) private userRepo: UserInterface) {
+  constructor(@Inject('UserInterface') private userRepo: UserInterface) {
     this.redisClient = new RedisClient();
   }
 
