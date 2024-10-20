@@ -21,7 +21,7 @@ export const PORT = process.env.PORT ?? 3000;
 export const ENV = process.env.ENV ?? "development";
 export const API_KEY = process.env.API_KEY;
 export const LIST_ROUTES = process.env.LIST_ROUTES ?? false;
-export const ROUTE_PREFIX = process.env.ROUTE_PREFIX ?? "/api";
+export const ROUTE_PREFIX = process.env.ROUTE_PREFIX ?? "";
 
 /**
  |
