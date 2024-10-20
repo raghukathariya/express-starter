@@ -3,13 +3,12 @@ import { HttpException } from "../../../Utils/Common/HttpException";
 import { UploadInterface } from "../Repositories/UploadInterface";
 import { HttpStatus } from "../../../Utils/Common/HttpStatus";
 import { Inject, Service } from "typedi";
-import { UploadInterfaceToken } from "../../ServiceProvider";
 
 @Service()
 export class UploadService {
   constructor(
-    @Inject(UploadInterfaceToken) private uploadRepo: UploadInterface
-  ) {}
+    @Inject('UploadInterface') private uploadRepo: UploadInterface
+  ) { }
 
   async findById(id: string): Promise<Upload> {
     try {

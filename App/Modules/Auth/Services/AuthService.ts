@@ -4,7 +4,6 @@ import { SendMailOptions } from "nodemailer";
 import { User } from "../../User/Models/User";
 import { MAIL_FROM } from "../../../Config/mail";
 import { JWT_OPTIONS } from "../../../Config/app";
-import { UserInterfaceToken } from "../../ServiceProvider";
 import { JwtManager } from "../../../Utils/Common/JwtManager";
 import { HttpStatus } from "../../../Utils/Common/HttpStatus";
 import { HttpException } from "../../../Utils/Common/HttpException";
@@ -13,7 +12,7 @@ import { EmailService } from "../../../Modules/Common/Services/EmailService";
 
 @Service()
 export class AuthService {
-  constructor(@Inject(UserInterfaceToken) private userRepo: UserInterface, private emailService: EmailService) { }
+  constructor(@Inject('UserInterface') private userRepo: UserInterface, private emailService: EmailService) { }
 
   async login(payload: any): Promise<any> {
     try {

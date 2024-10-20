@@ -3,14 +3,31 @@ import "reflect-metadata";
 import path from "path";
 import express from "express";
 import { Container } from "typedi";
-import "./Modules/ServiceProvider";
 import errorHandler from "strong-error-handler";
 import DatabaseConnection from "./Bootstrap/DatabaseConnection";
 import PrettyErrorMiddleware from "./Utils/Common/PrettyErrorMiddleware";
 import ExecutionTimeMiddleware from "./Utils/Common/ExecutionTimeMiddleware";
 import { createExpressServer, useContainer as routingUseContainer } from "routing-controllers";
-import { CONTROLLER_PATH, PORT, CORS_OPTIONS, ENV, GLOBAL_MIDDLEWARE_PATH, LIST_ROUTES } from "./Config/app";
+import { PORT, CORS_OPTIONS, ENV, LIST_ROUTES, ROUTE_PREFIX } from "./Config/app";
 import { RouteManager } from "./Utils/Core/RouteManager";
+import { ModuleServiceProvider } from "./Utils/Core/ModuleServiceProvider";
+import { ClassAutoLoader } from "./Utils/Core/ClassAutoLoader";
+import { cyanBright } from "colorette";
+
+const start = performance.now();
+
+const modulesBaseDir = path.resolve(__dirname, './Modules');
+const middlewareBaseDir = path.resolve(__dirname, './Utils/GlobalMiddlewares');
+
+/**
+  |
+  |=====================================================================
+  | Auto Register Interface and Repository from MODULES to typedi
+  |=====================================================================
+  |
+  */
+const bindRepository = new ModuleServiceProvider(modulesBaseDir);
+bindRepository.bindRepositoriesRecursively();
 
 // Set the container for routing-controllers
 routingUseContainer(Container);
@@ -26,15 +43,18 @@ routingUseContainer(Container);
 
 const app = createExpressServer({
   cors: {
-    CORS_OPTIONS,
+    CORS_OPTIONS, //origin: '*' // Allow requests from any origin
   },
-  classTransformer: true, // Show or Hide validation errors
-  controllers: [path.join(__dirname + CONTROLLER_PATH)],
-  validation: true, //Add Class Validator
-  middlewares: [path.join(__dirname + GLOBAL_MIDDLEWARE_PATH)],
+  validation: true,
+  routePrefix: ROUTE_PREFIX,
+  classTransformer: true,
   defaultErrorHandler: false,
+  controllers: ClassAutoLoader.loadClasses(modulesBaseDir, 'Controller'),
+  middlewares: ClassAutoLoader.loadClasses(middlewareBaseDir, 'Middleware')
 });
+
 app.use(express.json());
+app.use('/assets/uploads', express.static(path.join(__dirname, '../assets/uploads')));
 
 /**
   |
@@ -101,4 +121,10 @@ if (LIST_ROUTES == "true") {
   const routeManager = new RouteManager(app);
   routeManager.displayRoutes();
 }
+
+const end = performance.now();
+console.log(">>>>-------------------------------------->>>>>");
+console.log(cyanBright(`APPLICATION LOADING TIME : ${(end - start).toFixed(2)} ms`));
+console.log("<<<<--------------------------------------<<<<<");
+
 export default app;
